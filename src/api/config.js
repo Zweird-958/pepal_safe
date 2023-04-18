@@ -20,6 +20,9 @@ const config = {
       iterations: Number.parseInt(process.env.SECURITY_PASSWORD_ITERATIONS, 10),
       digest: "sha512",
     },
+    encryption: {
+      cle: process.env.SECURITY_ENCRYPTION_KEY,
+    },
   },
 }
 

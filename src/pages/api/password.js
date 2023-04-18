@@ -1,6 +1,8 @@
 import PasswordModel from "@/api/db/models/PasswordModel"
 import mw from "@/api/mw"
 import auth from "@/api/middlewares/auth"
+import encryption from "@/api/utils/encryption"
+import config from "@/api/config"
 
 const password = mw({
   POST: [
@@ -11,7 +13,7 @@ const password = mw({
 
       const createPassword = await PasswordModel.create({
         username,
-        password,
+        password: encryption(password, config.security.encryption.cle),
         site,
         createdBy: { email, _id },
       })
