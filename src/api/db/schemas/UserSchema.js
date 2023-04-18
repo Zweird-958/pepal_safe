@@ -1,5 +1,4 @@
 import { Schema } from "mongoose"
-import EmbeddedUserTypeSchema from "./EmbeddedUserTypeSchema"
 
 const UserSchema = new Schema(
   {
@@ -15,10 +14,6 @@ const UserSchema = new Schema(
     },
     passwordHash: {
       type: String,
-      required: true,
-    },
-    type: {
-      type: EmbeddedUserTypeSchema,
       required: true,
     },
   },
