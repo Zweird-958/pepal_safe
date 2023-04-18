@@ -55,6 +55,9 @@ const SignUp = () => {
           onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
+          title="Sign-up"
+          desc="Créeons votre compte. "
+          btnDesc="Créer compte"
         >
           <FormField name="username" placeholder="devLife01"></FormField>
           <FormField
