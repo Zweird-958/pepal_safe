@@ -2,6 +2,7 @@ import Button from "@/web/components/Button"
 import { Formik, Form as FormikForm } from "formik"
 import { ArrowPathIcon } from "@heroicons/react/24/solid"
 import ButtonIcon from "@/web/components/ButtonIcon"
+import FormField from "@/web/components/FormField"
 
 const Form = (props) => {
   const { title, desc, btnDesc, children, buttonSetField, ...otherProps } =
@@ -19,14 +20,20 @@ const Form = (props) => {
           <FormikForm className="grid grid-cols-1 gap-3">
             {children}
             {buttonSetField && (
-              <ButtonIcon
-                type="button"
-                onClick={() => {
-                  setFieldValue("password", "bruno")
-                }}
-              >
-                <ArrowPathIcon className="w-4" />
-              </ButtonIcon>
+              <div className="flex w-full gap-1">
+                <FormField
+                  name="password"
+                  placeholder="wOMmiU6NOIRXeWvKo35b"
+                ></FormField>
+                <ButtonIcon
+                  type="button"
+                  onClick={() => {
+                    setFieldValue("password", "securePassword123")
+                  }}
+                >
+                  <ArrowPathIcon className="w-6 h-4" />
+                </ButtonIcon>
+              </div>
             )}
             <Button type="submit">{btnDesc}</Button>
           </FormikForm>
