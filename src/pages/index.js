@@ -9,16 +9,16 @@ const Index = () => {
   } = useContext(AppContext)
 
   return (
-    <Page>
+    <Page title={session && "Coffre-fort"}>
       {session ? (
         <Safe session={session}></Safe>
       ) : (
-        <div>
+        <div className="bg-neutral-100 p-4 rounded-lg shadow-lg shadow-indigo-500 ">
           <p>
             Pour accéder à votre coffre-fort, veuillez vous authentifier en
             cliquant sur le lien Sign-in.
             <br></br>
-            Si vous n'avez pas encore de compte, vous pouvez en créer-un en
+            Si vous n'avez pas encore de compte, vous pouvez en créer un en
             cliquant sur Sign-up.
           </p>
         </div>
