@@ -1,6 +1,6 @@
 import crypto from "crypto"
 
-const chiffrement = (texte, cle) => {
+const encryption = (texte, cle) => {
   const cipher = crypto.createCipher("aes-256-cbc", cle)
   let crypted = cipher.update(texte, "utf8", "hex")
   crypted += cipher.final("hex")
@@ -8,4 +8,4 @@ const chiffrement = (texte, cle) => {
   return crypted
 }
 
-export default chiffrement
+export default encryption
