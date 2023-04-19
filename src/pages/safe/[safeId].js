@@ -1,7 +1,6 @@
 import AppContext from "@/web/components/AppContext"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
-import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 
 export const getServerSideProps = async ({ params }) => {
@@ -30,8 +29,6 @@ const SafeId = (props) => {
 
         setPassword(result)
       } catch (err) {
-        console.log(err)
-
         return
       }
     })()
