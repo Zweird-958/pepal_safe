@@ -10,7 +10,7 @@ const password = mw({
       const user = req.user
       const getPasswords = await PasswordModel.find({
         _id: passwordId,
-        "createdBy._id": user._id,
+        "user._id": user._id,
       })
       res.send(getPasswords)
     },
@@ -26,7 +26,7 @@ const password = mw({
 
       const oldPassword = PasswordModel.find({
         _id: passwordId,
-        "createdBy._id": user._id,
+        "user._id": user._id,
       })
       const updatePassword = await PasswordModel.findByIdAndUpdate(id, {
         username: username ?? oldPassword.username,
@@ -45,7 +45,7 @@ const password = mw({
 
       const deletedPassword = await PasswordModel.findOneAndDelete({
         _id: passwordId,
-        "createdBy.userId": user._id,
+        "user.id": user._id,
       })
 
       if (!deletedPassword) {
