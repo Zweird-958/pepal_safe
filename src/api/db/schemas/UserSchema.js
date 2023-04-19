@@ -1,4 +1,5 @@
 import { Schema } from "mongoose"
+import EmbeddedClasseSchema from "./EmbeddedClasse"
 
 const UserSchema = new Schema(
   {
@@ -19,6 +20,9 @@ const UserSchema = new Schema(
     role: {
       type: String,
       default: "student",
+    },
+    classes: {
+      type: EmbeddedClasseSchema,
     },
   },
   { timestamps: true }
