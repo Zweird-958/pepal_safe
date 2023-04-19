@@ -13,6 +13,7 @@ const Form = (props) => {
     buttonSetField,
     onChange,
     setPassword,
+    blackPlaceholder,
     ...otherProps
   } = props
 
@@ -31,8 +32,13 @@ const Form = (props) => {
               <div className="flex w-full gap-1">
                 <FormField
                   name="password"
-                  placeholder="wOMmiU6NOIRXeWvKo35b"
-                ></FormField>
+                  placeholder={
+                    buttonSetField === true
+                      ? "wOMmiU6NOIRXeWvKo35b"
+                      : buttonSetField
+                  }
+                  blackPlaceholder={blackPlaceholder}
+                />
                 <ButtonIcon
                   type="button"
                   onClick={() => {

@@ -106,7 +106,7 @@ const AddPassword = () => {
                 <FormField name="options.number" type="checkbox" label="123" />
                 <FormField name="options.symbol" type="checkbox" label="#$&" />
               </div>
-              <div className="">
+              <div>
                 <FormField
                   id="length"
                   name="length"

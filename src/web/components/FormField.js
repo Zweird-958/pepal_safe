@@ -1,7 +1,8 @@
+import clsx from "clsx"
 import { Field, ErrorMessage } from "formik"
 
 const FormField = (props) => {
-  const { name, label, children, ...otherProps } = props
+  const { blackPlaceholder, name, label, children, ...otherProps } = props
 
   return (
     <div className="grid grid-cols-1 gap-1 w-full">
@@ -14,7 +15,10 @@ const FormField = (props) => {
         <div className="bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 p-0.5 rounded-lg">
           <Field
             name={name}
-            className="w-full px-2 py-1 bg-neutral-100 rounded-md text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+            className={clsx(
+              "w-full px-2 py-1 bg-neutral-100 rounded-md text-sm outline-none focus:ring-2 focus:ring-indigo-500",
+              blackPlaceholder && "placeholder:text-black"
+            )}
             {...otherProps}
           >
             {children}
