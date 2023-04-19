@@ -6,10 +6,10 @@ const password = mw({
   GET: [
     auth,
     async (req, res) => {
-      const { passwordid } = req.query
+      const { passwordId } = req.query
       const user = req.user
       const getPasswords = await PasswordModel.find({
-        _id: passwordid,
+        _id: passwordId,
         "createdBy._id": user._id,
       })
       res.send(getPasswords)
