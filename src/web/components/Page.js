@@ -45,7 +45,7 @@ const Page = (props) => {
       </div>
       <main className={clsx("mx-auto my-10", variants[variant])}>
         <div>
-          {title && <h2 className="text-center font-medium">{title}</h2>}
+          {title && <h2 className="text-center font-medium mb-5">{title}</h2>}
           {children}
         </div>
       </main>

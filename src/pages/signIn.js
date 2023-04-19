@@ -47,7 +47,9 @@ const SignIn = () => {
           onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
-          signIn
+          title="Sign-in"
+          desc="Saisissez vos identifiants."
+          btnDesc="Se connecter"
         >
           <FormField
             name="email"
