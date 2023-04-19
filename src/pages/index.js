@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <Page title={session && "Coffre-fort"}>
       {session ? (
-        <Safe session={session}></Safe>
+        <Safe></Safe>
       ) : (
         <div className="bg-neutral-100 p-4 rounded-lg shadow-lg shadow-indigo-500 ">
           <p>

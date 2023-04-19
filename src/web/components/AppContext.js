@@ -36,13 +36,13 @@ export const AppContextProvider = (props) => {
     ;(async () => {
       const jwt = localStorage.getItem(config.session.localStorageKey)
 
-      const {
-        data: { error },
-      } = await api.get("/session")
+      // const {
+      //   data: { error },
+      // } = await api.get("/session")
 
-      if (error) {
-        return signOut()
-      }
+      // if (error) {
+      //   return signOut()
+      // }
 
       if (jwt) {
         setSession(jsonwebtoken.decode(jwt).payload)
