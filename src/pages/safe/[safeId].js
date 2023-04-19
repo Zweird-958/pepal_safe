@@ -1,6 +1,7 @@
 import AppContext from "@/web/components/AppContext"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
+import decryption from "@/api/utils/decryption"
 import { useContext, useEffect, useState } from "react"
 
 export const getServerSideProps = async ({ params }) => {
@@ -34,7 +35,18 @@ const SafeId = (props) => {
     })()
   }, [safeId])
 
-  return <Page variant="small">{password && <div>{password.site}</div>}</Page>
+  return (
+    <Page variant="small">
+      {password && (
+        <div className="bg-neutral-100 p-4 rounded-lg shadow-lg shadow-indigo-500">
+          {password.site}
+          {password.updatedAt}
+          {password.username}
+          {password.password}
+        </div>
+      )}
+    </Page>
+  )
 }
 
 export default SafeId
