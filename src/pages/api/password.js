@@ -25,7 +25,7 @@ const password = mw({
           username,
           password: encryption(password, config.security.encryption.cle),
           site,
-          createdBy: { email: user.email, id: user._id },
+          user: { email: user.email, id: user._id },
         })
         res.send(createPassword)
 
@@ -35,7 +35,7 @@ const password = mw({
           username,
           password: encryption(password, config.security.encryption.cle),
           site,
-          createdBy: { email, id: _id },
+          user: { email, id: _id },
         })
         res.send(createPassword)
 
@@ -49,8 +49,8 @@ const password = mw({
     async (req, res) => {
       const { email, _id } = req.user
       const getPasswords = await PasswordModel.find({
-        "createdBy.email": email,
-        "createdBy._id": _id,
+        "user.email": email,
+        "user._id": _id,
       })
       res.send(getPasswords)
     },
