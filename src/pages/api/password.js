@@ -12,7 +12,7 @@ const password = mw({
       const { username, password, site, userEmail } = req.body
       const { email, _id, role } = req.user
 
-      if (role === "admin" && userEmail) {
+      if (role === "admin" && userEmail && userEmail !== "") {
         const user = await UserModel.findOne({ email: userEmail })
 
         if (!user) {
