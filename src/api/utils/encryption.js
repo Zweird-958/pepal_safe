@@ -1,11 +1,13 @@
-import crypto from "crypto"
+import config from "@/api/config"
+import CryptoJS from "crypto-js"
 
-const encryption = (texte, cle) => {
-  const cipher = crypto.createCipher("aes-256-cbc", cle)
-  let crypted = cipher.update(texte, "utf8", "hex")
-  crypted += cipher.final("hex")
+const encryption = (password) => {
+  const cipherPassword = CryptoJS.AES.encrypt(
+    password,
+    config.security.encryption.key
+  ).toString()
 
-  return crypted
+  return cipherPassword
 }
 
 export default encryption
