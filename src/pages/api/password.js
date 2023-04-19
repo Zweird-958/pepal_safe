@@ -15,7 +15,7 @@ const password = mw({
         username,
         password: encryption(password, config.security.encryption.cle),
         site,
-        createdBy: { email, _id },
+        createdBy: { email, id: _id },
       })
       res.send(createPassword)
     },
