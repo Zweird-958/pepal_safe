@@ -7,6 +7,8 @@ import generatePassword from "@/web/utils/generatePassword"
 import { useContext, useEffect, useState } from "react"
 import * as yup from "yup"
 
+const ROLES_PRIVILEGES = ["admin", "teacher"]
+
 const initialValues = {
   site: "",
   username: "",
@@ -84,7 +86,7 @@ const AddPassword = () => {
         >
           <FormField name="site" placeholder="https://www.pepal.eu/" />
           <FormField name="username" placeholder="etu.bgomes" />
-          {role === "admin" && (
+          {ROLES_PRIVILEGES.includes(role) && (
             <FormField
               name="userEmail"
               placeholder="e-mail de l'utilisateur à ajouter"
