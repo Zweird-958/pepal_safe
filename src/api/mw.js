@@ -19,6 +19,7 @@ const mw = (handlersByMethod) => async (req, res) => {
     let handlerIndex = 0
 
     // Execute each handler
+
     const next = async () => {
       const handler = handlers[handlerIndex]
       handlerIndex += 1

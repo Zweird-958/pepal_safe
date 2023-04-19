@@ -20,16 +20,22 @@ const password = mw({
       res.send(createPassword)
     },
   ],
-
   GET: [
     auth,
     async (req, res) => {
       const { email, _id } = req.user
-      const getPasswords = await PasswordModel.find({
-        "createdBy.email": email,
-        "createdBy._id": _id,
-      })
-      res.send(getPasswords)
+
+      try {
+        const getPasswords = await PasswordModel.find({
+          "createdBy.email": email,
+          "createdBy.id": _id,
+        }).sort({ site: 1 })
+        res.send({ result: getPasswords })
+      } catch (err) {
+        res.status(500).send({ error: err })
+
+        return
+      }
     },
   ],
 })
