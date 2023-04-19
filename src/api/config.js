@@ -21,7 +21,7 @@ const config = {
       digest: "sha512",
     },
     encryption: {
-      cle: process.env.SECURITY_ENCRYPTION_KEY,
+      key: process.env.SECURITY_ENCRYPTION_KEY,
     },
   },
 }

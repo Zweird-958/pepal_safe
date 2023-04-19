@@ -1,6 +1,7 @@
 import PasswordModel from "@/api/db/models/PasswordModel"
 import mw from "@/api/mw"
 import auth from "@/api/middlewares/auth"
+import decryption from "@/api/utils/decryption"
 
 const password = mw({
   GET: [
@@ -14,7 +15,26 @@ const password = mw({
         "user.id": _id,
       })
 
-      res.send({ result: getPasswords })
+      const {
+        _id: id,
+        username,
+        user,
+        site,
+        createdAt,
+        updatedAt,
+      } = getPasswords
+
+      const newPasswordObject = {
+        id,
+        username,
+        user,
+        site,
+        createdAt,
+        updatedAt,
+        password: decryption(getPasswords.password),
+      }
+
+      res.send({ result: newPasswordObject })
     },
   ],
 
