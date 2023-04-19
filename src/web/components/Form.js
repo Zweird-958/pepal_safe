@@ -1,13 +1,20 @@
 import Button from "@/web/components/Button"
-import { Formik, Form as FormikForm } from "formik"
-import { ArrowPathIcon } from "@heroicons/react/24/solid"
 import ButtonIcon from "@/web/components/ButtonIcon"
 import FormField from "@/web/components/FormField"
-import generatePassword from "@/web/utils/generatePassword"
+import { ArrowPathIcon } from "@heroicons/react/24/solid"
+import { Formik, Form as FormikForm } from "formik"
 
 const Form = (props) => {
-  const { title, desc, btnDesc, children, buttonSetField, ...otherProps } =
-    props
+  const {
+    title,
+    desc,
+    btnDesc,
+    children,
+    buttonSetField,
+    onChange,
+    setPassword,
+    ...otherProps
+  } = props
 
   return (
     <div className="grid grid-cols-1 gap-6">
@@ -18,7 +25,7 @@ const Form = (props) => {
 
       <Formik {...otherProps}>
         {({ setFieldValue }) => (
-          <FormikForm className="grid grid-cols-1 gap-3">
+          <FormikForm className="grid grid-cols-1 gap-3" onChange={onChange}>
             {children}
             {buttonSetField && (
               <div className="flex w-full gap-1">
@@ -29,21 +36,7 @@ const Form = (props) => {
                 <ButtonIcon
                   type="button"
                   onClick={() => {
-                    const length = document.getElementById("length")
-                    const upper = document.getElementById("upper")
-                    const lower = document.getElementById("lower")
-                    const number = document.getElementById("number")
-                    const symbol = document.getElementById("symbol")
-
-                    const values = {
-                      length: length.value,
-                      upper: upper.checked,
-                      lower: lower.checked,
-                      number: number.checked,
-                      symbol: symbol.checked,
-                    }
-
-                    setFieldValue("password", generatePassword(values))
+                    setPassword(setFieldValue)
                   }}
                 >
                   <ArrowPathIcon className="w-6 h-4" />

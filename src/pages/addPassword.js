@@ -2,6 +2,7 @@ import Form from "@/web/components/Form"
 import FormField from "@/web/components/FormField"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
+import generatePassword from "@/web/utils/generatePassword"
 import { useState } from "react"
 import * as yup from "yup"
 
@@ -28,9 +29,25 @@ const validationSchema = yup.object().shape({
 
 const AddPassword = () => {
   const [passwordLength, setPasswordLength] = useState(20)
+  const options = initialValues.options
 
   const handleSubmit = async (values) => {
     await api.post("/password", values)
+  }
+
+  const handleChange = (event) => {
+    const { name, checked } = event.target
+    const optionName = name.split(".")[1]
+
+    if (optionName in initialValues.options) {
+      options[optionName] = checked
+    }
+  }
+
+  const setPassword = (setFieldValue) => {
+    const length = document.querySelector("#length")
+    const password = generatePassword({ ...options, length: length.value })
+    setFieldValue("password", password)
   }
 
   return (
@@ -44,6 +61,8 @@ const AddPassword = () => {
           desc="Saisissez tous les champs."
           btnDesc="Ajouter"
           buttonSetField
+          onChange={handleChange}
+          setPassword={setPassword}
         >
           <FormField
             name="site"
