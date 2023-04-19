@@ -3,8 +3,10 @@ import Form from "@/web/components/Form"
 import FormField from "@/web/components/FormField"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
+import { useRouter } from "next/router"
 import generatePassword from "@/web/utils/generatePassword"
 import { useContext, useEffect, useState } from "react"
+
 import * as yup from "yup"
 
 const ROLES_PRIVILEGES = ["admin", "teacher"]
@@ -32,6 +34,7 @@ const validationSchema = yup.object().shape({
 
 const AddPassword = () => {
   const [passwordLength, setPasswordLength] = useState(20)
+  const router = useRouter()
   const [role, setRole] = useState(null)
 
   const options = initialValues.options
@@ -41,6 +44,8 @@ const AddPassword = () => {
 
   const handleSubmit = async (values) => {
     await api.post("/password", values)
+
+    router.push("/")
   }
 
   const handleChange = (event) => {

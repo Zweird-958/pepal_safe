@@ -16,6 +16,7 @@ const auth = async (req, res, next) => {
       authorization,
       config.security.jwt.secret
     )
+
     const user = await UserModel.findOne({ _id: payload.userId })
 
     if (!user) {
@@ -33,9 +34,6 @@ const auth = async (req, res, next) => {
 
       return
     }
-
-    // eslint-disable-next-line no-console
-    console.error(err)
 
     res.status(500).send({ error: "Oops. Something wrong." })
   }

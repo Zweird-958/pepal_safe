@@ -61,16 +61,25 @@ const password = mw({
       }
     },
   ],
-
   GET: [
     auth,
     async (req, res) => {
       const { email, _id } = req.user
-      const getPasswords = await PasswordModel.find({
+
+
+      try {
+        const getPasswords = await PasswordModel.find({
         "user.email": email,
         "user._id": _id,
-      })
-      res.send(getPasswords)
+      }).sort({ site: 1 })
+        res.send({ result: getPasswords })
+      } catch (err) {
+        res.status(500).send({ error: err })
+
+        return
+      }
+
+
     },
   ],
 })
