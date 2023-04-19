@@ -15,6 +15,12 @@ const password = mw({
       if (role === "admin" && userEmail) {
         const user = await UserModel.findOne({ email: userEmail })
 
+        if (!user) {
+          res.status(404).send({ error: "User not found." })
+
+          return
+        }
+
         const createPassword = await PasswordModel.create({
           username,
           password: encryption(password, config.security.encryption.cle),
