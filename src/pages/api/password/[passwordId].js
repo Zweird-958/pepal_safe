@@ -7,23 +7,13 @@ const password = mw({
     auth,
     async (req, res) => {
       const { passwordId } = req.query
-
       const { _id } = req.user
 
-      try {
-        const getPasswords = await PasswordModel.findOne({
-          _id: passwordId,
-          "createdBy.id": _id,
-        })
-
-        res.send({ result: getPasswords })
-
-        return
-      } catch (err) {
-        res.status(401).send({ error: err })
-
-        return
-      }
+      const getPasswords = await PasswordModel.find({
+        _id: passwordid,
+        "user._id": user._id,
+      })
+      res.send(getPasswords)
     },
   ],
 

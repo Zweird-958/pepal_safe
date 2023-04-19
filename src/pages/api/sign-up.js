@@ -10,10 +10,12 @@ const signUp = mw({
       try {
         const passwordHash = hashPassword(password)
 
+        const userExists = await UserModel.find().count()
         const user = await UserModel.create({
           email,
           passwordHash,
           username,
+          role: userExists > 0 ? "student" : "admin",
         })
 
         res.send({ result: user })

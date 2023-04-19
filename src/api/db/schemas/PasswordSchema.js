@@ -5,7 +5,7 @@ const PasswordSchema = new Schema(
   {
     username: { type: String, required: true },
     password: { type: String, required: true },
-    createdBy: { type: EmbeddedUserSchema, required: true },
+    user: { type: EmbeddedUserSchema, required: true },
     site: { type: String, required: true },
   },
   { timestamps: true }
