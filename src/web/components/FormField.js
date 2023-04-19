@@ -1,14 +1,14 @@
 import { Field, ErrorMessage } from "formik"
 
 const FormField = (props) => {
-  const { name, checkbox, children, ...otherProps } = props
+  const { name, label, children, ...otherProps } = props
 
   return (
     <div className="grid grid-cols-1 gap-1 w-full">
-      {checkbox ? (
+      {label ? (
         <div className="flex p-2 items-center gap-1">
           <Field name={name} className="" {...otherProps}></Field>
-          <label>{checkbox}</label>
+          <label>{label}</label>
         </div>
       ) : (
         <div className="bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 p-0.5 rounded-lg">

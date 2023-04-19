@@ -3,6 +3,7 @@ import { Formik, Form as FormikForm } from "formik"
 import { ArrowPathIcon } from "@heroicons/react/24/solid"
 import ButtonIcon from "@/web/components/ButtonIcon"
 import FormField from "@/web/components/FormField"
+import generatePassword from "@/web/utils/generatePassword"
 
 const Form = (props) => {
   const { title, desc, btnDesc, children, buttonSetField, ...otherProps } =
@@ -28,7 +29,21 @@ const Form = (props) => {
                 <ButtonIcon
                   type="button"
                   onClick={() => {
-                    setFieldValue("password", "securePassword123")
+                    const length = document.getElementById("length")
+                    const upper = document.getElementById("upper")
+                    const lower = document.getElementById("lower")
+                    const number = document.getElementById("number")
+                    const symbol = document.getElementById("symbol")
+
+                    const values = {
+                      length: length.value,
+                      upper: upper.checked,
+                      lower: lower.checked,
+                      number: number.checked,
+                      symbol: symbol.checked,
+                    }
+
+                    setFieldValue("password", generatePassword(values))
                   }}
                 >
                   <ArrowPathIcon className="w-6 h-4" />
