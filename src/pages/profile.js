@@ -3,6 +3,7 @@ import FormField from "@/web/components/FormField"
 import MainDiv from "@/web/components/MainDiv"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
+import { useState } from "react"
 import * as yup from "yup"
 
 const passwordInitialValues = {
@@ -40,8 +41,18 @@ const emailValidationSchema = yup.object().shape({
 })
 
 const Profile = () => {
+  const [passwordError, setPasswordError] = useState(false)
+
   const handlePasswordSubmit = async ({ oldPassword, newPassword }) => {
-    await api.patch("/users", { oldPassword, password: newPassword })
+    const {
+      data: { error },
+    } = await api.patch("/users", { oldPassword, password: newPassword })
+
+    if (error == "Wrong password.") {
+      setPasswordError(true)
+    } else {
+      setPasswordError(false)
+    }
   }
 
   const handleEmailSubmit = async (values) => {
@@ -85,6 +96,11 @@ const Profile = () => {
             placeholder="Confirmer nouveau mot de passe"
           />
         </Form>
+        {passwordError && (
+          <p className="text-red-500 font-medium">
+            Ancien mot de passe incorrect.
+          </p>
+        )}
       </MainDiv>
     </Page>
   )
