@@ -15,7 +15,7 @@ const Users = () => {
         const {
           data: { result },
           status,
-        } = await api.get(`/user`)
+        } = await api.get(`/users`)
 
         if (status === 401) {
           return
