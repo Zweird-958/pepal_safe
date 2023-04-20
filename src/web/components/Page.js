@@ -29,9 +29,12 @@ const Page = (props) => {
             <nav>
               <ul className="flex justify-between gap-10">
                 {session ? (
-                  <Li onClick={signOut} noLink>
-                    Sign-out
-                  </Li>
+                  <>
+                    <Li href="/profile">Profile</Li>
+                    <Li onClick={signOut} noLink>
+                      Sign-out
+                    </Li>
+                  </>
                 ) : (
                   <>
                     <Li href="/signIn">Sign-in</Li>

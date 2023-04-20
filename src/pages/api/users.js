@@ -54,20 +54,21 @@ const users = mw({
       const { _id, oldEmail, passwordHash, passwordChanged } = req.user
       const { email, oldPassword, password } = req.body
 
-      if (hashPassword(oldPassword) !== passwordHash) {
-        res.status(401).send({ error: "Unauthorized." })
+      if (oldPassword && password) {
+        if (hashPassword(oldPassword) !== passwordHash) {
+          res.status(401).send({ error: "Wrong password." })
 
-        return
+          return
+        }
       }
 
       try {
         const user = await UserModel.findOneAndUpdate(
           { _id },
           {
-            passwordHash:
-              password !== "" ? hashPassword(password) : passwordHash,
-            email: email != "" ? email : oldEmail,
-            passwordChanged: password !== "" ? true : passwordChanged,
+            passwordHash: password ? hashPassword(password) : passwordHash,
+            email: email ?? oldEmail,
+            passwordChanged: password ? true : passwordChanged,
           }
         )
 
