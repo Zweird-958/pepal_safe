@@ -4,7 +4,7 @@ import FormField from "@/web/components/FormField"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
 import { useRouter } from "next/router"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import * as yup from "yup"
 
 const initialValues = {
@@ -32,6 +32,20 @@ const SignUp = () => {
     actions: { signIn },
   } = useContext(AppContext)
 
+  const [countUsers, setcountUsers] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const {
+          data: { result },
+        } = await api.get("/countUsers")
+        setcountUsers(result)
+      } catch (err) {
+        return
+      }
+    })()
+  }, [])
   const handleSubmit = async (values) => {
     await api.post("/sign-up", values)
 
@@ -59,6 +73,14 @@ const SignUp = () => {
           desc="Créeons votre compte. "
           btnDesc="Créer compte"
         >
+          {!countUsers && (
+            <div>
+              <p className="text-sm text-red-500">
+                Vous allez créer un compte administrateur
+              </p>
+            </div>
+          )}
+
           <FormField name="username" placeholder="devLife01"></FormField>
           <FormField
             name="email"

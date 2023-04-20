@@ -56,12 +56,14 @@ const emailValidationSchema = yup.object().shape({
 })
 
 const Profile = () => {
+
   const {
     state: { session },
   } = useContext(AppContext)
 
   const [user, setUser] = useState(null)
   const [showForm, setShowForm] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
 
   const router = useRouter()
 
@@ -70,9 +72,17 @@ const Profile = () => {
   }
 
   const handlePasswordSubmit = async ({ oldPassword, newPassword }) => {
-    await api.patch("/users", { oldPassword, password: newPassword })
+    const {
+      data: { error },
+    } = await api.patch("/users", { oldPassword, password: newPassword })
 
-    setShowForm(false)
+    if (error == "Wrong password.") {
+      setPasswordError(true)
+    } else if (!error) {
+      setShowForm(false)
+      setPasswordError(false)
+    }
+
   }
 
   const handleEmailSubmit = async (values) => {
@@ -135,6 +145,11 @@ const Profile = () => {
               placeholder="Nouveau mot de passe"
             />
           </Form>
+          {passwordError && (
+          <p className="text-red-500 font-medium">
+            Ancien mot de passe incorrect.
+          </p>
+        )}
           <Button type="button" onClick={handleClick}>
             Annuler
           </Button>
