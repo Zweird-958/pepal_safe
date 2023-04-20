@@ -1,8 +1,17 @@
 import AppContext from "@/web/components/AppContext"
+import Form from "@/web/components/Form"
+import FormField from "@/web/components/FormField"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
+
+const initialValues = {
+  username: "",
+  email: "",
+  password: "",
+  role: "",
+}
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -34,6 +43,10 @@ const Users = () => {
     })()
   }, [session])
 
+  const handleSubmit = async (values) => {
+    await api.post("/users", values)
+  }
+
   return (
     <Page>
       <div className="flex justify-center flex-col">
@@ -44,6 +57,16 @@ const Users = () => {
           </div>
         ))}
       </div>
+      <Form
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        btnDesc="AJOUTER"
+      >
+        <FormField name="username" placeholder="username" />
+        <FormField name="email" placeholder="email" />
+        <FormField name="password" placeholder="password" />
+        <FormField name="role" placeholder="role" />
+      </Form>
     </Page>
   )
 }

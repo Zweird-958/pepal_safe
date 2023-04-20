@@ -1,7 +1,7 @@
-import { hashPassword } from "../../lib/auth"
-import UserModel from "../../lib/models/UserModel"
-import mw from "../../lib/mw"
-import auth from "../../lib/middlewares/auth"
+import hashPassword from "@/api/utils/hashPassword"
+import UserModel from "@/api/db/models/UserModel"
+import mw from "@/api/mw"
+import auth from "@/api/middlewares/auth"
 
 const user = mw({
   GET: [
@@ -24,26 +24,6 @@ const user = mw({
           classes: { $in: classes },
         })
         res.send({ result: getUsers })
-      } else {
-        res.send({ error: "You don't have the right to access this page" })
-      }
-    },
-  ],
-  POST: [
-    auth,
-    async (req, res) => {
-      const authUser = req.user
-
-      if (authUser.role == "admin" || authUser.role == "staff") {
-        const { email, password, username, role } = req.body
-        const passwordHash = hashPassword(password)
-        const user = await UserModel.create({
-          email,
-          passwordHash,
-          username,
-          role,
-        })
-        res.send({ result: user })
       } else {
         res.send({ error: "You don't have the right to access this page" })
       }
