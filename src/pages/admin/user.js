@@ -3,8 +3,14 @@ import Page from "../../web/components/Page"
 import api from "../../web/services/api"
 import Link from "next/link"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
+import AppContext from "../../web/components/AppContext"
+import { useContext } from "react"
 
 const User = () => {
+  const {
+    state: { session },
+  } = useContext(AppContext)
+
   const [user, setUser] = useState([])
 
   useEffect(() => {

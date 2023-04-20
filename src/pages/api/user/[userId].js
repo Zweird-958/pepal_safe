@@ -1,8 +1,8 @@
-import { UserModel } from "../../../models/User"
-import mw from "../../../middlewares/mw"
-import auth from "../../../middlewares/auth"
-import encryption from "../../../utils/encryption"
-import config from "@/api/config"
+import auth from "@/api/middlewares/auth.js"
+import encryption from "@/api/utils/encryption.js"
+import UserModel from "@/api/db/models/UserModel.js"
+import mw from "@/api/mw"
+import config from "@/api/config.js"
 
 const user = mw({
   GET: [
@@ -10,7 +10,13 @@ const user = mw({
     async (req, res) => {
       const userId = req.query.userId
       const { role } = req.user
-      const user = UserModel.findOne({ _id: userId })
+      const user = await UserModel.findOne({ _id: userId })
+
+      if (role === "admin") {
+        res.send({ result: user })
+
+        return
+      }
 
       if (
         config.roles.ROLES_PRIORITY[role] >
