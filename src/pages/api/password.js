@@ -58,7 +58,8 @@ const password = mw({
   GET: [
     auth,
     async (req, res) => {
-      const { email, _id } = req.user
+      const user = req.user
+      const { email, _id } = user
 
       try {
         const getPasswords = await PasswordModel.find({
@@ -66,7 +67,9 @@ const password = mw({
           "user.id": _id,
         }).sort({ site: 1 })
 
-        res.send({ result: getPasswords })
+        res.send({
+          result: { passwordChanged: user.passwordChanged, getPasswords },
+        })
       } catch (err) {
         res.status(500).send({ error: err })
 
