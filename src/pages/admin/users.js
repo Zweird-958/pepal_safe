@@ -1,72 +1,60 @@
-import AppContext from "@/web/components/AppContext"
-import Form from "@/web/components/Form"
-import FormField from "@/web/components/FormField"
-import Page from "@/web/components/Page"
-import api from "@/web/services/api"
-import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
-
-const initialValues = {
-  username: "",
-  email: "",
-  password: "",
-  role: "",
-}
+import { InformationCircleIcon } from "@heroicons/react/24/outline"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import Page from "../../web/components/Page"
+import api from "../../web/services/api"
 
 const Users = () => {
-  const [users, setUsers] = useState([])
-  const router = useRouter()
-
-  const {
-    state: { session },
-  } = useContext(AppContext)
+  const [user, setUser] = useState([])
+  const [allowed, setAllowed] = useState(false)
 
   useEffect(() => {
     ;(async () => {
-      if (session) {
+      try {
         const {
           data: { result },
-        } = await api.get(`/role/${session.userId}`)
+          status,
+        } = await api.get(`/user`)
 
-        if (result !== "admin") {
-          router.push("/")
-
+        if (status === 401) {
           return
-        } else {
-          const {
-            data: { result },
-          } = await api.get("/users")
-
-          setUsers(result)
         }
+
+        setUser(result)
+        setAllowed(true)
+      } catch (err) {
+        return
       }
     })()
-  }, [session])
-
-  const handleSubmit = async (values) => {
-    await api.post("/users", values)
-  }
+  }, [])
 
   return (
     <Page>
-      <div className="flex justify-center flex-col">
-        {users.map(({ _id, username, email }) => (
-          <div key={_id} className="flex flex-col items-center">
-            <p>{username}</p>
-            <p>{email}</p>
-          </div>
-        ))}
-      </div>
-      <Form
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        btnDesc="AJOUTER"
-      >
-        <FormField name="username" placeholder="username" />
-        <FormField name="email" placeholder="email" />
-        <FormField name="password" placeholder="password" />
-        <FormField name="role" placeholder="role" />
-      </Form>
+      {allowed ? (
+        <div className="grid grid-cols-1 gap-2 p-4 bg-neutral-100 rounded-lg mt-4 shadow-lg shadow-indigo-500">
+          {user &&
+            user.map((user) => {
+              return (
+                <div
+                  key={user._id}
+                  className="bg-gradient-to-r font from-violet-400 via-indigo-400 to-blue-400 p-0.5 rounded-lg"
+                >
+                  <div className="flex justify-between bg-neutral-100 rounded-md px-2 py-1 items-center">
+                    <div>
+                      <p className="text-sm font-medium">{user.username}</p>
+                      <p className="text-xs">{user.email}</p>
+                    </div>
+                    <Link href={`/admin/users/${user._id}`}>
+                      <InformationCircleIcon className="w-5 hover:text-blue-500"></InformationCircleIcon>
+                    </Link>
+                  </div>
+                </div>
+              )
+            })}
+        </div>
+      ) : (
+        <p className="text-center font-medium text-2xl">ACCÈS NON AUTORISÉ</p>
+      )}
     </Page>
   )
 }

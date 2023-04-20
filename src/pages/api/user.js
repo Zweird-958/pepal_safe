@@ -11,19 +11,27 @@ const user = mw({
       if (role === "admin") {
         const getUsers = await UserModel.find()
         res.send({ result: getUsers })
+
+        return
       } else if (role === "staff") {
         const getUsers = await UserModel.find({
           $or: [{ role: "student" }, { role: "teacher" }],
         })
         res.send({ result: getUsers })
+
+        return
       } else if (role === "teacher") {
         const getUsers = await UserModel.find({
           role: "student",
           classes: { $in: classes },
         })
         res.send({ result: getUsers })
+
+        return
       } else {
-        res.send({ error: "You don't have the right to access this page" })
+        res.status(401).send({ error: "Forbidden." })
+
+        return
       }
     },
   ],
