@@ -6,24 +6,23 @@ import { useEffect, useState } from "react"
 const Usersid = () => {
   const [users, setUser] = useState([])
   const router = useRouter()
-  const { usersId } = router.query
+  const { userId } = router.query
 
   useEffect(() => {
     ;(async () => {
-      if (usersId) {
+      if (userId) {
         try {
           const {
             data: { result },
-          } = await api.get(`/user/${usersId}`)
+          } = await api.get(`/user/${userId}`)
 
-          console.log(result)
           setUser(result)
         } catch (err) {
           return
         }
       }
     })()
-  }, [usersId])
+  }, [userId])
 
   return (
     <Page>

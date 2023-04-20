@@ -23,10 +23,7 @@ const user = mw({
         return
       }
 
-      if (
-        config.roles.ROLES_PRIORITY[role] >
-        config.roles.ROLES_PRIORITY[user.role]
-      ) {
+      if (config.roles.priority[role] > config.roles.priority[user.role]) {
         res.send({ result: user })
 
         return
@@ -37,7 +34,6 @@ const user = mw({
 
         return
       }
-
     },
   ],
 

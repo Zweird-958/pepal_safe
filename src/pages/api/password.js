@@ -26,10 +26,7 @@ const password = mw({
             return
           }
 
-          if (
-            config.roles.ROLES_PRIORITY[role] <=
-            config.roles.ROLES_PRIORITY[user.role]
-          ) {
+          if (config.roles.priority[role] <= config.roles.priority[user.role]) {
             res.status(403).send({ error: "You are not allowed to do this." })
 
             return
