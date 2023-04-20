@@ -26,7 +26,7 @@ const Users = () => {
       if (session) {
         const {
           data: { result },
-        } = await api.get(`/users/${session.userId}`)
+        } = await api.get(`/role/${session.userId}`)
 
         if (result !== "admin") {
           router.push("/")
