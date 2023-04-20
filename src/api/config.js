@@ -26,6 +26,12 @@ const config = {
   },
   roles: {
     createUser: ["admin", "staff"],
+    priority: {
+      student: 0,
+      teacher: 1,
+      staff: 2,
+      admin: 3,
+    },
   },
 }
 

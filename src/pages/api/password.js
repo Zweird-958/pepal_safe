@@ -3,12 +3,7 @@ import mw from "@/api/mw"
 import auth from "@/api/middlewares/auth"
 import encryption from "@/api/utils/encryption"
 import UserModel from "@/api/db/models/UserModel"
-
-const ROLES_PRIORITY = {
-  student: 0,
-  teacher: 1,
-  admin: 2,
-}
+import config from "@/api/config"
 
 const password = mw({
   POST: [
@@ -31,7 +26,10 @@ const password = mw({
             return
           }
 
-          if (ROLES_PRIORITY[role] <= ROLES_PRIORITY[user.role]) {
+          if (
+            config.roles.ROLES_PRIORITY[role] <=
+            config.roles.ROLES_PRIORITY[user.role]
+          ) {
             res.status(403).send({ error: "You are not allowed to do this." })
 
             return
