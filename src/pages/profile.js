@@ -3,6 +3,7 @@ import FormField from "@/web/components/FormField"
 import MainDiv from "@/web/components/MainDiv"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
+import { useState } from "react"
 import * as yup from "yup"
 
 const passwordInitialValues = {
@@ -28,7 +29,7 @@ const passwordValidationSchema = yup.object().shape({
         return value === this.parent.newPassword
       }
     )
-    .required(),
+    .required("Confirmer le mot de passe est un champ requis."),
 })
 
 const emailInitialValues = {
@@ -40,8 +41,22 @@ const emailValidationSchema = yup.object().shape({
 })
 
 const Profile = () => {
-  const handlePasswordSubmit = async ({ oldPassword, newPassword }) => {
-    await api.patch("/users", { oldPassword, password: newPassword })
+  const [passwordError, setPasswordError] = useState(false)
+
+  const handlePasswordSubmit = async (
+    { oldPassword, newPassword },
+    { resetForm }
+  ) => {
+    const {
+      data: { error },
+    } = await api.patch("/users", { oldPassword, password: newPassword })
+
+    if (error == "Wrong password.") {
+      setPasswordError(true)
+    } else if (!error) {
+      resetForm()
+      setPasswordError(false)
+    }
   }
 
   const handleEmailSubmit = async (values) => {
@@ -85,6 +100,11 @@ const Profile = () => {
             placeholder="Confirmer nouveau mot de passe"
           />
         </Form>
+        {passwordError && (
+          <p className="text-red-500 font-medium">
+            Ancien mot de passe incorrect.
+          </p>
+        )}
       </MainDiv>
     </Page>
   )
