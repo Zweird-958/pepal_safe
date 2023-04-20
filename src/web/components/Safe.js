@@ -3,7 +3,10 @@ import Button from "@/web/components/Button"
 import api from "@/web/services/api"
 import Link from "next/link"
 import { useContext, useEffect, useState } from "react"
-import { InformationCircleIcon } from "@heroicons/react/24/outline"
+import {
+  InformationCircleIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline"
 
 const Safe = () => {
   const {
@@ -32,19 +35,27 @@ const Safe = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4">
+      {!passwordIsChanged && (
+        <div className="grid grid-cols-1 gap-4 bg-neutral-100 p-4 rounded-lg shadow-lg shadow-indigo-500">
+          <div className="grid grid-cols-1 gap-4 text-red-500 ">
+            <div className="flex gap-1 justify-center">
+              <ExclamationTriangleIcon className="w-5"></ExclamationTriangleIcon>
+              <p className="font-medium">ATTENTION</p>
+              <ExclamationTriangleIcon className="w-5"></ExclamationTriangleIcon>
+            </div>
+            <p className="break-words">
+              Tu possèdes toujours ton mot de passe par défaut. Il est fortement
+              recommandé de le modifier afin d'accroître la sécurité de ton
+              compte.
+            </p>
+          </div>
+          <Link href="/profile">
+            <Button>Changer mon mot de passe</Button>
+          </Link>
+        </div>
+      )}
       <div className="grid grid-cols-1 gap-4 bg-neutral-100 p-4 rounded-lg shadow-lg shadow-indigo-500">
         <p>Salut {session.userUsername}, nous sommes content de te revoir.</p>
-        {!passwordIsChanged && (
-          <>
-            <p>
-              Tu as toujour un mot de passe par defaut nous te conseillons de
-              changer ton mot de passe.
-            </p>
-            <Link href="/profile">
-              <Button>Changer mon mot de passe</Button>
-            </Link>
-          </>
-        )}
 
         <div className="flex w-full gap-2">
           <Link href="/genPassword">

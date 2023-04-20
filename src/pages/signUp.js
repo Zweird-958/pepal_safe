@@ -6,6 +6,7 @@ import api from "@/web/services/api"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 import * as yup from "yup"
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"
 
 const initialValues = {
   username: "",
@@ -74,9 +75,10 @@ const SignUp = () => {
           btnDesc="Créer compte"
         >
           {!countUsers && (
-            <div>
-              <p className="text-sm text-red-500">
-                Vous allez créer un compte administrateur
+            <div className="flex items-center gap-1">
+              <ExclamationTriangleIcon className="w-5 text-red-500"></ExclamationTriangleIcon>
+              <p className="text-sm text-red-500 truncate">
+                Le prochain compte sera administrateur
               </p>
             </div>
           )}
