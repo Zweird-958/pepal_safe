@@ -21,6 +21,10 @@ const UserSchema = new Schema(
       type: String,
       default: "student",
     },
+    passwordChanged: {
+      type: Boolean,
+      default: false,
+    },
     classes: {
       type: EmbeddedClasseSchema,
     },
