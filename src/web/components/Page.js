@@ -2,7 +2,8 @@ import AppContext from "@/web/components/AppContext"
 import Li from "@/web/components/Li"
 import clsx from "clsx"
 import Link from "next/link"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
+import api from "@/web/services/api"
 
 const variants = {
   small: " max-w-xs",
@@ -13,10 +14,30 @@ const variants = {
 const Page = (props) => {
   const { title, variant = "default", children } = props
 
+  const [isAdmin, setIsAdmin] = useState(false)
+
   const {
     state: { session },
     actions: { signOut },
   } = useContext(AppContext)
+
+  useEffect(() => {
+    ;(async () => {
+      if (!session) {
+        return
+      }
+
+      try {
+        const { data } = await api.get(`/role/${session.userId}`)
+
+        if (data.result === "admin") {
+          setIsAdmin(true)
+        }
+      } catch (err) {
+        return
+      }
+    })()
+  }, [])
 
   return (
     <div>
@@ -28,6 +49,12 @@ const Page = (props) => {
             </Link>
             <nav>
               <ul className="flex justify-between gap-10">
+                {isAdmin && (
+                  <>
+                    <Li href="/admin/users">Dashbord</Li>
+                    <Li href="/admin/createUser">Add User</Li>
+                  </>
+                )}
                 {session ? (
                   <>
                     <Li href="/profile">Profile</Li>
