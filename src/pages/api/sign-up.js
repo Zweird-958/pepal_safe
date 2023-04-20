@@ -16,6 +16,7 @@ const signUp = mw({
           passwordHash,
           username,
           role: userExists > 0 ? "student" : "admin",
+          passwordChanged: true,
         })
 
         res.send({ result: user })

@@ -11,6 +11,7 @@ const Safe = () => {
   } = useContext(AppContext)
 
   const [passwords, setPasswords] = useState([])
+  const [user, setUser] = useState([])
 
   useEffect(() => {
     ;(async () => {
@@ -24,6 +25,11 @@ const Safe = () => {
         } = await api.get("/password")
 
         setPasswords(result)
+
+        const {
+          data: { result: user },
+        } = await api.get(`/user/${session.userId}`)
+        setUser(user)
       } catch (err) {
         return
       }
@@ -34,6 +40,15 @@ const Safe = () => {
     <div className="grid grid-cols-1 gap-4">
       <div className="grid grid-cols-1 gap-4 bg-neutral-100 p-4 rounded-lg shadow-lg shadow-indigo-500">
         <p>Salut {session.userUsername}, nous sommes content de te revoir.</p>
+        {!user.passwordChanged && (
+          <p>
+            Tu as toujour un mot de passe par defaut nous te conseillons de
+            changer ton mot de passe.
+            <Link href="/profile">
+              <Button>Changer mon mot de passe</Button>
+            </Link>
+          </p>
+        )}
 
         <div className="flex w-full gap-2">
           <Link href="/genPassword">
