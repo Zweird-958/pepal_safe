@@ -24,6 +24,9 @@ const config = {
       key: process.env.SECURITY_ENCRYPTION_KEY,
     },
   },
+  roles: {
+    createUser: ["admin", "staff"],
+  },
 }
 
 export default config
