@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import Page from "../../web/components/Page"
 import api from "../../web/services/api"
+import MainDiv from "@/web/components/MainDiv"
 
 const Users = () => {
   const [user, setUser] = useState([])
@@ -31,7 +32,7 @@ const Users = () => {
   return (
     <Page>
       {allowed ? (
-        <div className="grid grid-cols-1 gap-2 p-4 bg-neutral-100 rounded-lg mt-4 shadow-lg shadow-indigo-500">
+        <MainDiv>
           {user &&
             user.map((user) => {
               return (
@@ -51,7 +52,7 @@ const Users = () => {
                 </div>
               )
             })}
-        </div>
+        </MainDiv>
       ) : (
         <p className="text-center font-medium text-2xl">ACCÈS NON AUTORISÉ</p>
       )}
