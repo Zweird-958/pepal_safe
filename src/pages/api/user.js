@@ -1,7 +1,6 @@
-import hashPassword from "@/api/utils/hashPassword"
 import UserModel from "@/api/db/models/UserModel"
-import mw from "@/api/mw"
 import auth from "@/api/middlewares/auth"
+import mw from "@/api/mw"
 
 const user = mw({
   GET: [
