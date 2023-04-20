@@ -15,8 +15,6 @@ const Usersid = () => {
           const {
             data: { result },
           } = await api.get(`/user/${usersId}`)
-
-          console.log(result)
           setUser(result)
         } catch (err) {
           return
