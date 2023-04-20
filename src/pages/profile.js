@@ -56,7 +56,6 @@ const emailValidationSchema = yup.object().shape({
 })
 
 const Profile = () => {
-
   const {
     state: { session },
   } = useContext(AppContext)
@@ -82,7 +81,6 @@ const Profile = () => {
       setShowForm(false)
       setPasswordError(false)
     }
-
   }
 
   const handleEmailSubmit = async (values) => {
@@ -144,12 +142,12 @@ const Profile = () => {
               type="password"
               placeholder="Nouveau mot de passe"
             />
+            {passwordError && (
+              <p className="text-red-500 font-medium">
+                Ancien mot de passe incorrect.
+              </p>
+            )}
           </Form>
-          {passwordError && (
-          <p className="text-red-500 font-medium">
-            Ancien mot de passe incorrect.
-          </p>
-        )}
           <Button type="button" onClick={handleClick}>
             Annuler
           </Button>
