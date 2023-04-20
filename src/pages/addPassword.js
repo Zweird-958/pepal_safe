@@ -66,11 +66,7 @@ const AddPassword = () => {
   useEffect(() => {
     ;(async () => {
       if (session) {
-        const {
-          data: { result },
-        } = await api.get(`users/${session.userId}`)
-
-        setRole(result)
+        setRole(session.userRole)
       }
     })()
   })
@@ -94,7 +90,7 @@ const AddPassword = () => {
           {ROLES_PRIVILEGES.includes(role) && (
             <FormField
               name="userEmail"
-              placeholder="e-mail de l'utilisateur à ajouter"
+              placeholder="E-mail de l'utilisateur à ajouter"
             />
           )}
 

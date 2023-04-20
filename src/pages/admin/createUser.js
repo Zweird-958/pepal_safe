@@ -51,6 +51,8 @@ const CreateUser = () => {
 
   const handleSubmit = async (values) => {
     await api.post("/users", values)
+
+    router.push("/admin/users")
   }
 
   return (
@@ -66,7 +68,11 @@ const CreateUser = () => {
         >
           <FormField name="username" placeholder="Jean" />
           <FormField name="email" placeholder="jean@supdevinci-edu.fr" />
-          <FormField name="password" placeholder="Mot de passe" />
+          <FormField
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+          />
           <FormField as="select" name="role">
             <option value="student">Étudiant(e)</option>
             <option value="teacher">Intervenant(e)</option>

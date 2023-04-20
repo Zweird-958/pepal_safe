@@ -8,13 +8,14 @@ const user = mw({
     auth,
     async (req, res) => {
       const userId = req.query.userId
-      const { role, _id } = req.user
+      const { role, email } = req.user
       const user = await UserModel.findOne({ _id: userId })
 
       const formatUser = {
         username: user.username,
         email: user.email,
         role: user.role,
+        updatedAt: user.updatedAt,
       }
 
       if (role === "admin") {
@@ -23,7 +24,7 @@ const user = mw({
         return
       }
 
-      if (_id === userId) {
+      if (email === user.email) {
         res.send({ result: formatUser })
 
         return
