@@ -9,7 +9,13 @@ const user = mw({
     async (req, res) => {
       const userId = req.query.userId
       const { role, _id } = req.user
-      const user = UserModel.findOne({ _id: userId })
+      const user = await UserModel.findOne({ _id: userId })
+
+      if (role === "admin") {
+        res.send({ result: user })
+
+        return
+      }
 
       if (_id == userId) {
         res.send({ result: user })
@@ -32,19 +38,6 @@ const user = mw({
         return
       }
 
-      // if (role === "admin") {
-      //   res.send({ result: user })
-      // } else if (
-      //   role === "staff" &&
-      //   user.role !== "admin" &&
-      //   user.role !== "staff"
-      // ) {
-      //   res.send({ result: user })
-      // } else if (role === "teacher" && user.role === "student") {
-      //   res.send({ result: user })
-      // } else {
-      //   res.send({ error: "You don't have the right to access this page" })
-      // }
     },
   ],
 
