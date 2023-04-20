@@ -9,8 +9,14 @@ const user = mw({
     auth,
     async (req, res) => {
       const userId = req.query.userId
-      const { role } = req.user
+      const { role, _id } = req.user
       const user = UserModel.findOne({ _id: userId })
+
+      if (_id == userId) {
+        res.send({ result: user })
+
+        return
+      }
 
       if (
         config.roles.ROLES_PRIORITY[role] >
