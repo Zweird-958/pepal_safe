@@ -1,7 +1,7 @@
-import { hashPassword } from "../../lib/auth"
-import UserModel from "../../lib/models/UserModel"
-import mw from "../../lib/mw"
-import auth from "../../lib/middlewares/auth"
+import UserModel from "@/api/db/models/UserModel"
+import mw from "@/api/mw"
+import auth from "@/api/middlewares/auth"
+import hashPassword from "@/api/utils/hashPassword"
 
 const user = mw({
   GET: [
