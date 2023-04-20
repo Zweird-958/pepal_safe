@@ -1,7 +1,6 @@
-import AppContext from "@/web/components/AppContext"
 import Page from "@/web/components/Page"
 import api from "@/web/services/api"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import formatDate from "@/web/utils/formatDate"
 import ButtonIcon from "@/web/components/ButtonIcon"
 import { PencilSquareIcon } from "@heroicons/react/24/solid"
@@ -37,10 +36,6 @@ const validationSchema = yup.object().shape({
 })
 
 const SafeId = (props) => {
-  const {
-    state: { session },
-  } = useContext(AppContext)
-
   const {
     params: { safeId },
   } = props
@@ -84,15 +79,22 @@ const SafeId = (props) => {
       try {
         const {
           data: { result },
+          status,
         } = await api.get(`/password/${safeId}`)
 
+        if ([404, 403].includes(status)) {
+          status === 404 && router.push("/404")
+
+          return
+        }
+
         setPassword(result)
-        setPasswordVisibility("◦".repeat(result.password.length))
+        setPasswordVisibility("•".repeat(result.password.length))
       } catch (err) {
         return
       }
     })()
-  }, [safeId])
+  }, [safeId, router])
 
   return (
     <Page variant={showForm ? "small" : "default"}>
@@ -190,7 +192,7 @@ const SafeId = (props) => {
                     }}
                     onMouseOut={() => {
                       setPasswordVisibility(
-                        "◦".repeat(password.password.length)
+                        "•".repeat(password.password.length)
                       )
                     }}
                   >

@@ -16,6 +16,12 @@ const password = mw({
         "user.id": _id,
       })
 
+      if (!getPasswords) {
+        res.status(404).send({ error: "Not found." })
+
+        return
+      }
+
       const {
         _id: id,
         username,

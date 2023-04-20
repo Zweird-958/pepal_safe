@@ -9,14 +9,12 @@ const CheckboxInput = (props) => {
           <label>{label}</label>
         </div>
       ) : (
-        <div className="bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 p-0.5 rounded-lg">
-          <input
-            className="w-full px-2 py-1 bg-neutral-100 rounded-md text-sm outline-none focus:ring-2 focus:ring-indigo-500"
-            {...otherProps}
-          >
-            {children}
-          </input>
-        </div>
+        <input
+          className="w-full px-2 py-1 bg-neutral-100 rounded-md text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+          {...otherProps}
+        >
+          {children}
+        </input>
       )}
     </div>
   )
