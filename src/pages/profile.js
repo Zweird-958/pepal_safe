@@ -29,7 +29,7 @@ const passwordValidationSchema = yup.object().shape({
         return value === this.parent.newPassword
       }
     )
-    .required(),
+    .required("Confirmer le mot de passe est un champ requis."),
 })
 
 const emailInitialValues = {
@@ -43,14 +43,18 @@ const emailValidationSchema = yup.object().shape({
 const Profile = () => {
   const [passwordError, setPasswordError] = useState(false)
 
-  const handlePasswordSubmit = async ({ oldPassword, newPassword }) => {
+  const handlePasswordSubmit = async (
+    { oldPassword, newPassword },
+    { resetForm }
+  ) => {
     const {
       data: { error },
     } = await api.patch("/users", { oldPassword, password: newPassword })
 
     if (error == "Wrong password.") {
       setPasswordError(true)
-    } else {
+    } else if (!error) {
+      resetForm()
       setPasswordError(false)
     }
   }
