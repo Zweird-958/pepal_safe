@@ -6,7 +6,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/solid"
 import generatePassword from "@/web/utils/generatePassword"
 
 const GenPassword = () => {
-  const [passwordLength, setPasswordLength] = useState(20)
+  const [passwordLength, setPasswordLength] = useState(30)
   const [password, setPassword] = useState("")
   const [copied, setCopied] = useState(false)
 
@@ -72,7 +72,7 @@ const GenPassword = () => {
                   label="#$&"
                 ></CheckboxInput>
               </div>
-              <div className="">
+              <div>
                 <CheckboxInput
                   id="length"
                   name="length"
