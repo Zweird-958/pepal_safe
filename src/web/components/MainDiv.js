@@ -1,8 +1,16 @@
+import clsx from "clsx"
+
 const MainDiv = (props) => {
-  const { children } = props
+  const { className, children, ...otherProps } = props
 
   return (
-    <div className="grid grid-cols-1 gap-2 p-4 bg-neutral-100 rounded-lg mt-4 shadow-lg shadow-indigo-500">
+    <div
+      className={clsx(
+        "p-4 bg-neutral-100 rounded-lg mt-4 shadow-lg shadow-indigo-500",
+        className
+      )}
+      {...otherProps}
+    >
       {children}
     </div>
   )

@@ -176,7 +176,7 @@ const SafeId = (props) => {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-3 text-sm">
+            <div className="grid grid-cols-1 gap-2 text-sm">
               <div className="bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 p-0.5 rounded-lg">
                 <div className="flex justify-between bg-neutral-100 rounded-md px-2 py-1">
                   <p>Nom d'utilisateur</p>
