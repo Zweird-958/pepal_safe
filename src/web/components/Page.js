@@ -1,6 +1,7 @@
 import AppContext from "@/web/components/AppContext"
 import Li from "@/web/components/Li"
 import clsx from "clsx"
+import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useContext } from "react"
 
@@ -23,9 +24,16 @@ const Page = (props) => {
       <div className="p-4 bg-neutral-100">
         <header className="max-w-xl mx-auto font-medium">
           <div className="flex justify-between">
-            <Link href="/">
-              <h1 className="hover:text-indigo-500">Pepal Safe</h1>
-            </Link>
+            <div className="flex items-center gap-2">
+              {session ? (
+                <LockOpenIcon className="w-5"></LockOpenIcon>
+              ) : (
+                <LockClosedIcon className="w-5"></LockClosedIcon>
+              )}
+              <Link href="/">
+                <h1 className="hover:text-indigo-500 ">Pepal Safe</h1>
+              </Link>
+            </div>
             <nav>
               <ul className="flex justify-between gap-10">
                 {session ? (
