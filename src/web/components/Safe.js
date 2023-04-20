@@ -14,6 +14,10 @@ const Safe = () => {
 
   useEffect(() => {
     ;(async () => {
+      if (!session) {
+        return
+      }
+
       try {
         const {
           data: { result },
@@ -24,7 +28,7 @@ const Safe = () => {
         return
       }
     })()
-  }, [])
+  }, [session])
 
   return (
     <div className="grid grid-cols-1 gap-4">
