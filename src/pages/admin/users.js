@@ -32,7 +32,7 @@ const Users = () => {
   return (
     <Page>
       {allowed ? (
-        <MainDiv>
+        <MainDiv className="gap-2 grid grid-cols-1">
           {user &&
             user.map((user) => {
               return (

@@ -16,6 +16,7 @@ const user = mw({
         email: user.email,
         role: user.role,
         updatedAt: user.updatedAt,
+        passwordChanged: user.passwordChanged,
       }
 
       if (role === "admin") {
