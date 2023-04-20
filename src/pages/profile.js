@@ -69,9 +69,21 @@ const Profile = () => {
           btnDesc="Modifier"
           title="Modifier mot de passe"
         >
-          <FormField name="oldPassword" />
-          <FormField name="newPassword" />
-          <FormField name="confirmPassword" />
+          <FormField
+            name="oldPassword"
+            type="password"
+            placeholder="Ancien mot de passe"
+          />
+          <FormField
+            name="newPassword"
+            type="password"
+            placeholder="Nouveau mot de passe"
+          />
+          <FormField
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirmer nouveau mot de passe"
+          />
         </Form>
       </MainDiv>
     </Page>
