@@ -11,23 +11,26 @@ const user = mw({
       const { role, _id } = req.user
       const user = await UserModel.findOne({ _id: userId })
 
+      const formatUser = {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      }
+
       if (role === "admin") {
-        res.send({ result: user })
+        res.send({ result: formatUser })
 
         return
       }
 
-      if (_id == userId) {
-        res.send({ result: user })
+      if (_id === userId) {
+        res.send({ result: formatUser })
 
         return
       }
 
-      if (
-        config.roles.ROLES_PRIORITY[role] >
-        config.roles.ROLES_PRIORITY[user.role]
-      ) {
-        res.send({ result: user })
+      if (config.roles.priority[role] > config.roles.priority[user.role]) {
+        res.send({ result: formatUser })
 
         return
       } else {
@@ -37,7 +40,6 @@ const user = mw({
 
         return
       }
-
     },
   ],
 
