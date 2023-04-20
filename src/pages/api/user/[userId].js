@@ -2,6 +2,7 @@ import { UserModel } from "../../../models/User"
 import mw from "../../../middlewares/mw"
 import auth from "../../../middlewares/auth"
 import encryption from "../../../utils/encryption"
+import config from "@/api/config"
 
 const user = mw({
   GET: [
@@ -11,19 +12,34 @@ const user = mw({
       const { role } = req.user
       const user = UserModel.findOne({ _id: userId })
 
-      if (role === "admin") {
-        res.send({ result: user })
-      } else if (
-        role === "staff" &&
-        user.role !== "admin" &&
-        user.role !== "staff"
+      if (
+        config.roles.ROLES_PRIORITY[role] >
+        config.roles.ROLES_PRIORITY[user.role]
       ) {
         res.send({ result: user })
-      } else if (role === "teacher" && user.role === "student") {
-        res.send({ result: user })
+
+        return
       } else {
-        res.send({ error: "You don't have the right to access this page" })
+        res
+          .status(403)
+          .send({ error: "You don't have the right to access this page" })
+
+        return
       }
+
+      // if (role === "admin") {
+      //   res.send({ result: user })
+      // } else if (
+      //   role === "staff" &&
+      //   user.role !== "admin" &&
+      //   user.role !== "staff"
+      // ) {
+      //   res.send({ result: user })
+      // } else if (role === "teacher" && user.role === "student") {
+      //   res.send({ result: user })
+      // } else {
+      //   res.send({ error: "You don't have the right to access this page" })
+      // }
     },
   ],
 

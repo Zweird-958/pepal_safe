@@ -2,14 +2,8 @@ import PasswordModel from "@/api/db/models/PasswordModel"
 import mw from "@/api/mw"
 import auth from "@/api/middlewares/auth"
 import encryption from "@/api/utils/encryption"
-import config from "@/api/config"
 import UserModel from "@/api/db/models/UserModel"
-
-const ROLES_PRIORITY = {
-  student: 0,
-  teacher: 1,
-  admin: 2,
-}
+import config from "@/api/config"
 
 const password = mw({
   POST: [
@@ -32,7 +26,10 @@ const password = mw({
             return
           }
 
-          if (ROLES_PRIORITY[role] <= ROLES_PRIORITY[user.role]) {
+          if (
+            config.roles.ROLES_PRIORITY[role] <=
+            config.roles.ROLES_PRIORITY[user.role]
+          ) {
             res.status(403).send({ error: "You are not allowed to do this." })
 
             return
@@ -40,7 +37,7 @@ const password = mw({
 
           const createPassword = await PasswordModel.create({
             username,
-            password: encryption(password, config.security.encryption.cle),
+            password: encryption(password),
             site,
             user: { email: user.email, id: user._id },
           })
@@ -51,7 +48,7 @@ const password = mw({
       } else {
         const createPassword = await PasswordModel.create({
           username,
-          password: encryption(password, config.security.encryption.cle),
+          password: encryption(password),
           site,
           user: { email, id: _id },
         })
@@ -66,20 +63,17 @@ const password = mw({
     async (req, res) => {
       const { email, _id } = req.user
 
-
       try {
         const getPasswords = await PasswordModel.find({
-        "user.email": email,
-        "user._id": _id,
-      }).sort({ site: 1 })
+          "user.email": email,
+          "user.id": _id,
+        }).sort({ site: 1 })
         res.send({ result: getPasswords })
       } catch (err) {
         res.status(500).send({ error: err })
 
         return
       }
-
-
     },
   ],
 })
