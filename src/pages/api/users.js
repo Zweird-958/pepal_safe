@@ -47,6 +47,40 @@ const users = mw({
       }
     },
   ],
+
+  PATCH: [
+    auth,
+    async (req, res) => {
+      const { _id, oldEmail, passwordHash, passwordChanged } = req.user
+      const { email, oldPassword, password } = req.body
+
+      if (hashPassword(oldPassword) !== passwordHash) {
+        res.status(401).send({ error: "Unauthorized." })
+
+        return
+      }
+
+      try {
+        const user = await UserModel.findOneAndUpdate(
+          { _id },
+          {
+            passwordHash:
+              password !== "" ? hashPassword(password) : passwordHash,
+            email: email != "" ? email : oldEmail,
+            passwordChanged: password !== "" ? true : passwordChanged,
+          }
+        )
+
+        res.send({ result: user })
+
+        return
+      } catch (err) {
+        res.status(403).send({ error: err })
+
+        return
+      }
+    },
+  ],
 })
 
 export default users
