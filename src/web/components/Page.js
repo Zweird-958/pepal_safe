@@ -37,7 +37,7 @@ const Page = (props) => {
         return
       }
     })()
-  }, [])
+  }, [session])
 
   return (
     <div>

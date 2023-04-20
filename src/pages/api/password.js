@@ -65,6 +65,7 @@ const password = mw({
           "user.email": email,
           "user.id": _id,
         }).sort({ site: 1 })
+
         res.send({ result: getPasswords })
       } catch (err) {
         res.status(500).send({ error: err })
