@@ -4,7 +4,6 @@ import clsx from "clsx"
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useContext, useEffect, useState } from "react"
-import api from "@/web/services/api"
 
 const variants = {
   small: " max-w-xs",
@@ -24,18 +23,10 @@ const Page = (props) => {
 
   useEffect(() => {
     ;(async () => {
-      if (!session) {
-        return
-      }
-
-      try {
-        const { data } = await api.get(`/role/${session.userId}`)
-
-        if (data.result === "admin") {
+      if (session) {
+        if (session.userRole === "admin") {
           setIsAdmin(true)
         }
-      } catch (err) {
-        return
       }
     })()
   }, [session])
@@ -57,16 +48,22 @@ const Page = (props) => {
             </div>
             <nav>
               <ul className="flex justify-between gap-10">
-                {isAdmin && (
-                  <>
-                    <Li href="/admin/users">Dashbord</Li>
-                    <Li href="/admin/createUser">Add User</Li>
-                  </>
-                )}
                 {session ? (
                   <>
                     <Li href="/profile">Profile</Li>
-                    <Li onClick={signOut} noLink>
+                    {isAdmin && (
+                      <>
+                        <Li href="/admin/users">Dashbord</Li>
+                        <Li href="/admin/createUser">Add User</Li>
+                      </>
+                    )}
+                    <Li
+                      onClick={() => {
+                        setIsAdmin(false)
+                        signOut()
+                      }}
+                      noLink
+                    >
                       Sign-out
                     </Li>
                   </>

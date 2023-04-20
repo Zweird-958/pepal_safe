@@ -25,6 +25,7 @@ const signIn = mw({
             payload: {
               userId: user._id,
               userUsername: user.username,
+              userRole: user.role,
             },
           },
           config.security.jwt.secret,
