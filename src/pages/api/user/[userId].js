@@ -11,20 +11,26 @@ const user = mw({
       const { role, _id } = req.user
       const user = await UserModel.findOne({ _id: userId })
 
+      const formatUser = {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      }
+
       if (role === "admin") {
-        res.send({ result: user })
+        res.send({ result: formatUser })
 
         return
       }
 
-      if (_id == userId) {
-        res.send({ result: user })
+      if (_id === userId) {
+        res.send({ result: formatUser })
 
         return
       }
 
       if (config.roles.priority[role] > config.roles.priority[user.role]) {
-        res.send({ result: user })
+        res.send({ result: formatUser })
 
         return
       } else {
@@ -33,19 +39,6 @@ const user = mw({
           .send({ error: "You don't have the right to access this page" })
 
         return
-      }
-    },
-  ],
-
-  DELETE: [
-    auth,
-    async (req, res) => {
-      const authUser = req.user
-      const userId = req.query.userId
-
-      if (authUser.role === "admin" || authUser.role === "staff") {
-        const user = await UserModel.deleteOne({ _id: userId })
-        res.send({ result: user })
       }
     },
   ],
